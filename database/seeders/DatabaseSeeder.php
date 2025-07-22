@@ -13,11 +13,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // 🔹 Tablas independientes (sin claves foráneas)
+        $this->call([
+            CustomerSeeder::class,
+            EmployeeSeeder::class,
+            CategorySeeder::class,
+            SupplierSeeder::class,
+            ShipperSeeder::class,
         ]);
+
+        // 🔹 Productos (dependen de category_id y supplier_id)
+        $this->call(ProductSeeder::class);
+
+        // 🔹 Órdenes (requieren customers, employees, shippers)
+        $this->call(OrderSeeder::class);
+
+        // 🔹 Detalles de órdenes (requieren orders y products)
+        $this->call(OrderDetailSeeder::class);
     }
 }
