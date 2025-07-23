@@ -14,7 +14,7 @@ class ShipperController extends Controller
      */
     public function index()
     {
-        //
+        return Shipper::all();
     }
 
     /**
