@@ -6,6 +6,8 @@ use App\Models\Supplier;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\SupplierCollection;
+use App\Http\Resources\V1\SupplierResource;
 
 class SupplierController extends Controller
 {
@@ -14,7 +16,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return Supplier::all();
+        return new SupplierCollection(Supplier::all());
     }
 
     /**
@@ -38,7 +40,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        return new SupplierResource($supplier);
     }
 
     /**

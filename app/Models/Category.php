@@ -10,6 +10,9 @@ class Category extends Model
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
 
+    // Definiendo nombre de la llave primaria
+    protected $primaryKey = 'category_id';
+
     public function products() {
         return $this->hasMany(Product::class);
     }

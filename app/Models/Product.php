@@ -10,6 +10,9 @@ class Product extends Model
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
+    // Definiendo nombre de la llave primaria
+    protected $primaryKey = 'product_id';
+
     public function order_details() {
         return $this->hasMany(OrderDetail::class);
     }

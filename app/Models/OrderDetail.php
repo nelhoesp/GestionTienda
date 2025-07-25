@@ -10,6 +10,9 @@ class OrderDetail extends Model
     /** @use HasFactory<\Database\Factories\OrderDetailFactory> */
     use HasFactory;
 
+    // Definiendo nombre de la llave primaria
+    protected $primaryKey = 'order_detail_id';
+
     public function order() {
         return $this->belongsTo(Order::class);
     }

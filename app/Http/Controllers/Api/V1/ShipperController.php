@@ -6,6 +6,8 @@ use App\Models\Shipper;
 use App\Http\Requests\StoreShipperRequest;
 use App\Http\Requests\UpdateShipperRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\ShipperCollection;
+use App\Http\Resources\V1\ShipperResource;
 
 class ShipperController extends Controller
 {
@@ -14,7 +16,7 @@ class ShipperController extends Controller
      */
     public function index()
     {
-        return Shipper::all();
+        return new ShipperCollection(Shipper::all());
     }
 
     /**
@@ -38,7 +40,7 @@ class ShipperController extends Controller
      */
     public function show(Shipper $shipper)
     {
-        //
+        return new ShipperResource($shipper);
     }
 
     /**

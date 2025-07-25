@@ -10,6 +10,9 @@ class Employee extends Model
     /** @use HasFactory<\Database\Factories\EmployeeFactory> */
     use HasFactory;
 
+    // Definiendo nombre de la llave primaria
+    protected $primaryKey = 'employee_id';
+
     public function orders() {
         return $this->hasMany(Order::class);
     }

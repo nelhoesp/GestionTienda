@@ -10,6 +10,9 @@ class Customer extends Model
     /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory;
 
+    // Definiendo nombre de la llave primaria
+    protected $primaryKey = 'customer_id';
+
     public function orders() {
         return $this->hasMany(Order::class);
     }

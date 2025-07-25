@@ -10,6 +10,9 @@ class Shipper extends Model
     /** @use HasFactory<\Database\Factories\ShipperFactory> */
     use HasFactory;
 
+    // Definiendo nombre de la llave primaria
+    protected $primaryKey = 'shipper_id';
+
     public function orders() {
         return $this->hasMany(Order::class);
     }

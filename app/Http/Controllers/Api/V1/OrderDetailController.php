@@ -6,6 +6,8 @@ use App\Models\OrderDetail;
 use App\Http\Requests\StoreOrderDetailRequest;
 use App\Http\Requests\UpdateOrderDetailRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\OrderDetailCollection;
+use App\Http\Resources\V1\OrderDetailResource;
 
 class OrderDetailController extends Controller
 {
@@ -14,7 +16,7 @@ class OrderDetailController extends Controller
      */
     public function index()
     {
-        return OrderDetail::all();
+        return new OrderDetailCollection(OrderDetail::all());
     }
 
     /**
@@ -38,7 +40,7 @@ class OrderDetailController extends Controller
      */
     public function show(OrderDetail $orderDetail)
     {
-        //
+        return new OrderDetailResource($orderDetail);
     }
 
     /**
