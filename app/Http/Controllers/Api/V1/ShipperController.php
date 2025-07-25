@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\ShipperFilter;
 use App\Models\Shipper;
-use App\Http\Requests\StoreShipperRequest;
+use App\Http\Requests\V1\StoreShipperRequest;
 use App\Http\Requests\UpdateShipperRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ShipperCollection;
@@ -45,7 +45,7 @@ class ShipperController extends Controller
      */
     public function store(StoreShipperRequest $request)
     {
-        //
+        return new ShipperResource(Shipper::create($request->all()));
     }
 
     /**

@@ -13,6 +13,13 @@ class Order extends Model
     // Definiendo nombre de la llave primaria
     protected $primaryKey = 'order_id';
 
+    protected $fillable = [
+        'customer_id',
+        'employee_id',
+        'order_date',
+        'shipper_id',
+    ];
+
     public function order_details() {
         return $this->hasMany(OrderDetail::class, 'order_id', 'order_id');
     }

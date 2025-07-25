@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\OrderDetailFilter;
 use App\Models\OrderDetail;
-use App\Http\Requests\StoreOrderDetailRequest;
+use App\Http\Requests\V1\StoreOrderDetailRequest;
 use App\Http\Requests\UpdateOrderDetailRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\OrderDetailCollection;
@@ -42,7 +42,7 @@ class OrderDetailController extends Controller
      */
     public function store(StoreOrderDetailRequest $request)
     {
-        //
+        return new OrderDetailResource(OrderDetail::create($request->all()));
     }
 
     /**

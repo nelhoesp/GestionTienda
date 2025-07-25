@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\ProductFilter;
 use App\Models\Product;
-use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\V1\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ProductCollection;
@@ -45,7 +45,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        return new ProductResource(Product::create($request->all()));
     }
 
     /**

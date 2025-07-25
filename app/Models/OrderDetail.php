@@ -13,6 +13,12 @@ class OrderDetail extends Model
     // Definiendo nombre de la llave primaria
     protected $primaryKey = 'order_detail_id';
 
+    protected $fillable = [
+        'order_id',
+        'product_id',
+        'quantity',
+    ];
+
     public function order() {
         return $this->belongsTo(Order::class);
     }

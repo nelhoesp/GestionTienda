@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class StoreEmployeeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class StoreEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'lastName' => ['required'],
+            'firstName' => ['required'],
+            'birthDate' => ['required', 'date'],
+            'photo' => ['nullable'],
+            'notes' => ['nullable'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'last_name' => $this->lastName,
+            'first_name' => $this->firstName,
+            'birth_date' => $this->birthDate,
+        ]);
     }
 }

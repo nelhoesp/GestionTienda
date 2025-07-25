@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\EmployeeFilter;
 use App\Models\Employee;
-use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\V1\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\EmployeeCollection;
@@ -45,7 +45,7 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        //
+        return new EmployeeResource(Employee::create($request->all()));
     }
 
     /**

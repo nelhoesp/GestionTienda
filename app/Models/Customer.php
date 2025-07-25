@@ -13,6 +13,15 @@ class Customer extends Model
     // Definiendo nombre de la llave primaria
     protected $primaryKey = 'customer_id';
 
+    protected $fillable = [
+        'customer_name',
+        'contact_name',
+        'address',
+        'city',
+        'postal_code',
+        'country',
+    ];
+
     public function orders() {
         return $this->hasMany(Order::class, 'customer_id', 'customer_id');
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\CategoryFilter;
 use App\Models\Category;
-use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\V1\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CategoryResource;
@@ -45,7 +45,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        return new CategoryResource(Category::create($request->all()));
     }
 
     /**

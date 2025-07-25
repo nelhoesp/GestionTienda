@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\SupplierFilter;
 use App\Models\Supplier;
-use App\Http\Requests\StoreSupplierRequest;
+use App\Http\Requests\V1\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\SupplierCollection;
@@ -45,7 +45,7 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        //
+        return new SupplierResource(Supplier::create($request->all()));
     }
 
     /**

@@ -13,6 +13,16 @@ class Supplier extends Model
     // Definiendo nombre de la llave primaria
     protected $primaryKey = 'supplier_id';
 
+    protected $fillable = [
+        'supplier_name',
+        'contact_name',
+        'address',
+        'city',
+        'postal_code',
+        'country',
+        'phone',
+    ];
+
     public function products() {
         return $this->hasMany(Product::class, 'supplier_id', 'supplier_id');
     }

@@ -13,6 +13,14 @@ class Product extends Model
     // Definiendo nombre de la llave primaria
     protected $primaryKey = 'product_id';
 
+    protected $fillable = [
+        'product_name',
+        'supplier_id',
+        'category_id',
+        'unit',
+        'price',
+    ];
+
     public function order_details() {
         return $this->hasMany(OrderDetail::class, 'product_id', 'product_id');
     }

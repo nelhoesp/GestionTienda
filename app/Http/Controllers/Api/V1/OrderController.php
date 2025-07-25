@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\OrderFilter;
 use App\Models\Order;
-use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\V1\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\OrderCollection;
@@ -45,7 +45,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        return new OrderResource(Order::create($request->all()));
     }
 
     /**

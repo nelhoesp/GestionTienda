@@ -13,6 +13,11 @@ class Shipper extends Model
     // Definiendo nombre de la llave primaria
     protected $primaryKey = 'shipper_id';
 
+    protected $fillable = [
+        'shipper_name',
+        'phone',
+    ];
+
     public function orders() {
         return $this->hasMany(Order::class, 'shipper_id', 'shipper_id');
     }

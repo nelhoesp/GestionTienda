@@ -13,6 +13,11 @@ class Category extends Model
     // Definiendo nombre de la llave primaria
     protected $primaryKey = 'category_id';
 
+    protected $fillable = [
+        'category_name',
+        'description',
+    ];
+
     public function products() {
         return $this->hasMany(Product::class, 'category_id', 'category_id');
     }

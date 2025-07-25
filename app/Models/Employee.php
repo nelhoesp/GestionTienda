@@ -13,6 +13,14 @@ class Employee extends Model
     // Definiendo nombre de la llave primaria
     protected $primaryKey = 'employee_id';
 
+    protected $fillable = [
+        'last_name',
+        'first_name',
+        'birth_date',
+        'photo',
+        'notes',
+    ];
+
     public function orders() {
         return $this->hasMany(Order::class, 'employee_id', 'employee_id');
     }
