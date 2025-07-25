@@ -2,21 +2,31 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\SupplierFilter;
 use App\Models\Supplier;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\SupplierCollection;
 use App\Http\Resources\V1\SupplierResource;
+use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new SupplierCollection(Supplier::all());
+        $filter = new SupplierFilter();
+        $queryItems = $filter->transform($request); // [['column', 'operator', 'value']]
+
+        if (count($queryItems) == 0) {
+            return new SupplierCollection(Supplier::paginate());
+        } else {
+            $suppliers = Supplier::where($queryItems)->paginate();
+            return new SupplierCollection($suppliers->appends($request->query()));
+        }
     }
 
     /**

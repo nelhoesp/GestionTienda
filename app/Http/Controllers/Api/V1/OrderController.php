@@ -2,21 +2,31 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\OrderFilter;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\OrderCollection;
 use App\Http\Resources\V1\OrderResource;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new OrderCollection(Order::all());
+        $filter = new OrderFilter();
+        $queryItems = $filter->transform($request); // [['column', 'operator', 'value']]
+
+        if (count($queryItems) == 0) {
+            return new OrderCollection(Order::paginate());
+        } else {
+            $orders = Order::where($queryItems)->paginate();
+            return new OrderCollection($orders->appends($request->query()));
+        }
     }
 
     /**
