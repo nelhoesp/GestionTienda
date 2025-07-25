@@ -19,14 +19,17 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $filter = new ProductFilter();
-        $queryItems = $filter->transform($request); // [['column', 'operator', 'value']]
+        $filterItems = $filter->transform($request); // [['column', 'operator', 'value']]
 
-        if (count($queryItems) == 0) {
-            return new ProductCollection(Product::paginate());
-        } else {
-            $products = Product::where($queryItems)->paginate();
-            return new ProductCollection($products->appends($request->query()));
+        $includeOrderDetails = $request->query('includeOrderDetails');
+
+        $products = Product::where($filterItems);
+
+        if ($includeOrderDetails) {
+            $products = $products->with('order_details');
         }
+
+        return new ProductCollection($products->paginate()->appends($request->query()));
     }
 
     /**
@@ -48,8 +51,14 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product, Request $request)
     {
+        $includeOrderDetails = $request->query('includeOrderDetails');
+
+        if ($includeOrderDetails) {
+            return new ProductResource($product->loadMissing('order_details'));
+        }
+
         return new ProductResource($product);
     }
 

@@ -21,6 +21,7 @@ class EmployeeResource extends JsonResource
             'birthDate' => $this->birth_date,
             'photo' => $this->photo,
             'notes' => $this->notes,
+            'orders' => OrderResource::collection($this->whenLoaded('orders')),
         ];
     }
 }

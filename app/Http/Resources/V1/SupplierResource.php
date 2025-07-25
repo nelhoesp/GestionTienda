@@ -23,6 +23,7 @@ class SupplierResource extends JsonResource
             'postalCode' => $this->postal_code,
             'country' => $this->country,
             'phone' => $this->phone,
+            'products' => ProductResource::collection($this->whenLoaded('products')),
         ];
     }
 }

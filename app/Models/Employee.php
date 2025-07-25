@@ -14,6 +14,6 @@ class Employee extends Model
     protected $primaryKey = 'employee_id';
 
     public function orders() {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'employee_id', 'employee_id');
     }
 }

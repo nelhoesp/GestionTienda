@@ -19,14 +19,17 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $filter = new CategoryFilter();
-        $queryItems = $filter->transform($request); // [['column', 'operator', 'value']]
+        $filterItems = $filter->transform($request); // [['column', 'operator', 'value']]
 
-        if (count($queryItems) == 0) {
-            return new CategoryCollection(Category::paginate());
-        } else {
-            $categories = Category::where($queryItems)->paginate();
-            return new CategoryCollection($categories->appends($request->query()));
+        $includeProducts = $request->query('includeProducts');
+
+        $categories = Category::where($filterItems);
+
+        if ($includeProducts) {
+            $categories = $categories->with('products');
         }
+
+        return new CategoryCollection($categories->paginate()->appends($request->query()));
     }
 
     /**
@@ -48,8 +51,14 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Category $category, Request $request)
     {
+        $includeProducts = $request->query('includeProducts');
+
+        if ($includeProducts) {
+            return new CategoryResource($category->loadMissing('products'));
+        }
+        
         return new CategoryResource($category);
     }
 

@@ -14,7 +14,7 @@ class Order extends Model
     protected $primaryKey = 'order_id';
 
     public function order_details() {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, 'order_id', 'order_id');
     }
 
     public function customer() {

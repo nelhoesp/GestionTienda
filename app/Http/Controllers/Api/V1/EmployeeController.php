@@ -19,14 +19,17 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $filter = new EmployeeFilter();
-        $queryItems = $filter->transform($request); // [['column', 'operator', 'value']]
+        $filterItems = $filter->transform($request); // [['column', 'operator', 'value']]
 
-        if (count($queryItems) == 0) {
-            return new EmployeeCollection(Employee::paginate());
-        } else {
-            $employees = Employee::where($queryItems)->paginate();
-            return new EmployeeCollection($employees->appends($request->query()));
+        $includeOrders = $request->query('includeOrders');
+
+        $employees = Employee::where($filterItems);
+
+        if ($includeOrders) {
+            $employees = $employees->with('orders');
         }
+        
+        return new EmployeeCollection($employees->paginate()->appends($request->query()));    
     }
 
     /**
@@ -48,8 +51,14 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Employee $employee)
+    public function show(Employee $employee, Request $request)
     {
+        $includeOrders = $request->query('includeOrders');
+
+        if ($includeOrders) {
+            return new EmployeeResource($employee->loadMissing('orders'));
+        }
+        
         return new EmployeeResource($employee);
     }
 

@@ -18,6 +18,7 @@ class ShipperResource extends JsonResource
             'shipperId' => $this->shipper_id,
             'shipperName' => $this->shipper_name,
             'phone' => $this->phone,
+            'orders' => OrderResource::collection($this->whenLoaded('orders')),
         ];
     }
 }

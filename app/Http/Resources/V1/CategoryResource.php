@@ -18,6 +18,7 @@ class CategoryResource extends JsonResource
             'categoryId' => $this->category_id,
             'categoryName' => $this->category_name,
             'description' => $this->description,
+            'products' => ProductResource::collection($this->whenLoaded('products')),
         ];
     }
 }

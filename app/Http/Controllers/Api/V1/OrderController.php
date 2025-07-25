@@ -19,14 +19,17 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filter = new OrderFilter();
-        $queryItems = $filter->transform($request); // [['column', 'operator', 'value']]
+        $filterItems = $filter->transform($request); // [['column', 'operator', 'value']]
 
-        if (count($queryItems) == 0) {
-            return new OrderCollection(Order::paginate());
-        } else {
-            $orders = Order::where($queryItems)->paginate();
-            return new OrderCollection($orders->appends($request->query()));
+        $includeOrderDetails = $request->query('includeOrderDetails');
+
+        $orders = Order::where($filterItems);
+
+        if ($includeOrderDetails) {
+            $orders = $orders->with('order_details');
         }
+
+        return new OrderCollection($orders->paginate()->appends($request->query()));
     }
 
     /**
@@ -48,8 +51,14 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show(Order $order, Request $request)
     {
+        $includeOrderDetails = $request->query('includeOrderDetails');
+
+        if ($includeOrderDetails) {
+            return new OrderResource($order->loadMissing('order_details'));
+        }
+        
         return new OrderResource($order);
     }
 

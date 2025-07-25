@@ -19,14 +19,17 @@ class ShipperController extends Controller
     public function index(Request $request)
     {
         $filter = new ShipperFilter();
-        $queryItems = $filter->transform($request); // [['column', 'operator', 'value']]
+        $filterItems = $filter->transform($request); // [['column', 'operator', 'value']]
 
-        if (count($queryItems) == 0) {
-            return new ShipperCollection(Shipper::paginate());
-        } else {
-            $shippers = Shipper::where($queryItems)->paginate();
-            return new ShipperCollection($shippers->appends($request->query()));
+        $includeOrders = $request->query('includeOrders');
+
+        $shippers = Shipper::where($filterItems);
+
+        if ($includeOrders) {
+            $shippers = $shippers->with('orders');
         }
+
+        return new ShipperCollection($shippers->paginate()->appends($request->query()));
     }
 
     /**
@@ -48,8 +51,14 @@ class ShipperController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Shipper $shipper)
+    public function show(Shipper $shipper, Request $request)
     {
+        $includeOrders = $request->query('includeOrders');
+
+        if ($includeOrders) {
+            return new ShipperResource($shipper->loadMissing('orders'));
+        }
+        
         return new ShipperResource($shipper);
     }
 

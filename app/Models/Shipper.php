@@ -14,6 +14,6 @@ class Shipper extends Model
     protected $primaryKey = 'shipper_id';
 
     public function orders() {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'shipper_id', 'shipper_id');
     }
 }

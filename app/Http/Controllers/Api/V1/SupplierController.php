@@ -19,14 +19,17 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
         $filter = new SupplierFilter();
-        $queryItems = $filter->transform($request); // [['column', 'operator', 'value']]
+        $filterItems = $filter->transform($request); // [['column', 'operator', 'value']]
 
-        if (count($queryItems) == 0) {
-            return new SupplierCollection(Supplier::paginate());
-        } else {
-            $suppliers = Supplier::where($queryItems)->paginate();
-            return new SupplierCollection($suppliers->appends($request->query()));
+        $includeProducts = $request->query('includeProducts');
+
+        $suppliers = Supplier::where($filterItems);
+
+        if ($includeProducts) {
+            $suppliers = $suppliers->with('products');
         }
+
+        return new SupplierCollection($suppliers->paginate()->appends($request->query()));
     }
 
     /**
@@ -48,8 +51,14 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Supplier $supplier)
+    public function show(Supplier $supplier, Request $request)
     {
+        $includeProducts = $request->query('includeProducts');
+
+        if ($includeProducts) {
+            return new SupplierResource($supplier->loadMissing('products'));
+        }
+        
         return new SupplierResource($supplier);
     }
 

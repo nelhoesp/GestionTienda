@@ -20,6 +20,7 @@ class OrderResource extends JsonResource
             'employeeId' => $this->employee_id,
             'orderDate' => $this->order_date,
             'shipperId' => $this->shipper_id,
+            'order_details' => OrderDetailResource::collection($this->whenLoaded('order_details')),
         ];
     }
 }

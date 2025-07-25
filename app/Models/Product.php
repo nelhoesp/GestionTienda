@@ -14,7 +14,7 @@ class Product extends Model
     protected $primaryKey = 'product_id';
 
     public function order_details() {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, 'product_id', 'product_id');
     }
 
     public function supplier() {

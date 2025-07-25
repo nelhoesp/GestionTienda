@@ -22,6 +22,7 @@ class CustomerResource extends JsonResource
             'city' => $this->city,
             'postalCode' => $this->postal_code,
             'country' => $this->country,
+            'orders' => OrderResource::collection($this->whenLoaded('orders')),
         ];
     }
 }

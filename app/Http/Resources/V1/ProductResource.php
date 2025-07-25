@@ -21,6 +21,7 @@ class ProductResource extends JsonResource
             'categoryId' => $this->category_id,
             'unit' => $this->unit,
             'price' => $this->price,
+            'order_details' => OrderDetailResource::collection($this->whenLoaded('order_details')),
         ];
     }
 }
