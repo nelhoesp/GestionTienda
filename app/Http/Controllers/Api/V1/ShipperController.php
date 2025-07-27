@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\V1\ShipperFilter;
 use App\Models\Shipper;
 use App\Http\Requests\V1\StoreShipperRequest;
-use App\Http\Requests\UpdateShipperRequest;
+use App\Http\Requests\V1\UpdateShipperRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ShipperCollection;
 use App\Http\Resources\V1\ShipperResource;
@@ -75,7 +75,7 @@ class ShipperController extends Controller
      */
     public function update(UpdateShipperRequest $request, Shipper $shipper)
     {
-        //
+        $shipper->update($request->all());
     }
 
     /**

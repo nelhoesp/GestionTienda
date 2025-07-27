@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\V1\SupplierFilter;
 use App\Models\Supplier;
 use App\Http\Requests\V1\StoreSupplierRequest;
-use App\Http\Requests\UpdateSupplierRequest;
+use App\Http\Requests\V1\UpdateSupplierRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\SupplierCollection;
 use App\Http\Resources\V1\SupplierResource;
@@ -75,7 +75,7 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
-        //
+        $supplier->update($request->all());
     }
 
     /**

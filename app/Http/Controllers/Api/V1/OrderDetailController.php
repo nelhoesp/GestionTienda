@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\V1\OrderDetailFilter;
 use App\Models\OrderDetail;
 use App\Http\Requests\V1\StoreOrderDetailRequest;
-use App\Http\Requests\UpdateOrderDetailRequest;
+use App\Http\Requests\V1\UpdateOrderDetailRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\OrderDetailCollection;
 use App\Http\Resources\V1\OrderDetailResource;
@@ -66,7 +66,7 @@ class OrderDetailController extends Controller
      */
     public function update(UpdateOrderDetailRequest $request, OrderDetail $orderDetail)
     {
-        //
+        $orderDetail->update($request->all());
     }
 
     /**

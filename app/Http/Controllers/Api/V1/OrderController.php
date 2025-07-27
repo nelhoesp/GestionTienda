@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\V1\OrderFilter;
 use App\Models\Order;
 use App\Http\Requests\V1\StoreOrderRequest;
-use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Requests\V1\UpdateOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\OrderCollection;
 use App\Http\Resources\V1\OrderResource;
@@ -75,7 +75,7 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $order->update($request->all());
     }
 
     /**
