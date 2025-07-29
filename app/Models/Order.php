@@ -25,14 +25,14 @@ class Order extends Model
     }
 
     public function customer() {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function employee() {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 
     public function shipper() {
-        return $this->belongsTo(Shipper::class);
+        return $this->belongsTo(Shipper::class, 'shipper_id');
     }
 }

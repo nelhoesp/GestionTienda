@@ -25,4 +25,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('products', ProductController::class);
     Route::apiResource('shippers', ShipperController::class);
     Route::apiResource('suppliers', SupplierController::class);
+
+    Route::post('order_details/bulk', ['uses' => 'OrderDetailController@bulkStore']);
 });

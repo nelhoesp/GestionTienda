@@ -7,9 +7,11 @@ use App\Models\OrderDetail;
 use App\Http\Requests\V1\StoreOrderDetailRequest;
 use App\Http\Requests\V1\UpdateOrderDetailRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\BulkStoreOrderDetailRequest;
 use App\Http\Resources\V1\OrderDetailCollection;
 use App\Http\Resources\V1\OrderDetailResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class OrderDetailController extends Controller
 {
@@ -43,6 +45,14 @@ class OrderDetailController extends Controller
     public function store(StoreOrderDetailRequest $request)
     {
         return new OrderDetailResource(OrderDetail::create($request->all()));
+    }
+
+    public function bulkStore(BulkStoreOrderDetailRequest $request) {
+        $bulk = collect($request->all())->map(function($arr, $key) {
+            return Arr::except($arr, ['orderId', 'productId']);
+        });
+
+        OrderDetail::insert($bulk->toArray());
     }
 
     /**

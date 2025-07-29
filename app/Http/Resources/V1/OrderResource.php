@@ -21,6 +21,17 @@ class OrderResource extends JsonResource
             'orderDate' => $this->order_date,
             'shipperId' => $this->shipper_id,
             'order_details' => OrderDetailResource::collection($this->whenLoaded('order_details')),
+            'employee' => $this->whenLoaded('employee', function () {
+                return [
+                    'firstName' => $this->employee->first_name,
+                    'lastName' => $this->employee->last_name,
+                ];
+            }),
+            'shipper' => $this->whenLoaded('shipper', function () {
+                return [
+                    'shipperName' => $this->shipper->shipper_name
+                ];
+            })
         ];
     }
 }

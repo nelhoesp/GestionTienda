@@ -54,12 +54,24 @@ class OrderController extends Controller
     public function show(Order $order, Request $request)
     {
         $includeOrderDetails = $request->query('includeOrderDetails');
+        $includeEmployee = $request->query('includeEmployee');
+        $includeShipper = $request->query('includeShipper');
+
+        $relations = [];
 
         if ($includeOrderDetails) {
-            return new OrderResource($order->loadMissing('order_details'));
+            $relations[] = 'order_details.product';
         }
-        
-        return new OrderResource($order);
+
+        if ($includeEmployee) {
+            $relations[] = 'employee';
+        }
+
+        if ($includeShipper) {
+            $relations[] = 'shipper';
+        }
+
+        return new OrderResource($order->loadMissing($relations));
     }
 
     /**
